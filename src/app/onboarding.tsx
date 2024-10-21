@@ -3,7 +3,7 @@ import React from 'react';
 
 import { Cover } from '@/components/cover';
 import { useIsFirstTime } from '@/core/hooks';
-import { Button, FocusAwareStatusBar, SafeAreaView, Text, View } from '@/ui';
+import { Button, FocusAwareStatusBar, Text, View } from '@/ui';
 export default function Onboarding() {
   const [_, setIsFirstTime] = useIsFirstTime();
   const router = useRouter();
@@ -13,28 +13,26 @@ export default function Onboarding() {
       <View className="w-full flex-1">
         <Cover />
       </View>
-      <View className="justify-end ">
+      <View className="mb-20 justify-end px-8">
         <Text className="my-3 text-center text-5xl font-bold">
-          Obytes Starter
+          Welcome to Finverse{' '}
         </Text>
         <Text className="mb-2 text-center text-lg text-gray-600">
-          The right way to build your mobile app
+          Your all-in-one solution for managing mandates and recurring payments{' '}
         </Text>
 
         <Text className="my-1 pt-6 text-left text-lg">
-          🚀 Production-ready{' '}
+          💼 Comprehensive mandate management
         </Text>
         <Text className="my-1 text-left text-lg">
-          🥷 Developer experience + Productivity
+          🔄 Streamlined recurring payments
         </Text>
         <Text className="my-1 text-left text-lg">
-          🧩 Minimal code and dependencies
+          📊 Financial insights at your fingertips
         </Text>
         <Text className="my-1 text-left text-lg">
-          💪 well maintained third-party libraries
+          🛡️ Secure and reliable transactions
         </Text>
-      </View>
-      <SafeAreaView className="mt-6">
         <Button
           label="Let's Get Started "
           onPress={() => {
@@ -42,7 +40,7 @@ export default function Onboarding() {
             router.replace('/login');
           }}
         />
-      </SafeAreaView>
+      </View>
     </View>
   );
 }
