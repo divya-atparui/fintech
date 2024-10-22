@@ -10,6 +10,7 @@ export * from './input';
 export * from './list';
 export * from './modal';
 export * from './progress-bar';
+export * from "./radio-button"
 export * from './select';
 export * from './text';
 export * from './utils';
