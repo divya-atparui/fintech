@@ -8,6 +8,8 @@ import { Controller,useForm } from 'react-hook-form';
 import { Platform,TouchableOpacity } from 'react-native';
 import { z } from 'zod';
 
+import { useMakeTransaction } from '@/api/transaction/use-make-transaction';
+import { useAuth } from '@/core';
 import { useMandateStore } from '@/core/mandates';
 import { Button, Checkbox, ControlledSelect, Radio,Text, View } from '@/ui';
 
@@ -30,11 +32,20 @@ const schema = z.object({
   path: ["toDate"],
 });
 
+
+
 type FormType = z.infer<typeof schema>;
 
 export default function PaymentMandateForm() {
 
+
+
+ const {mutate:makeMandate} = useMakeTransaction()
   const router = useRouter()
+  const { token } = useAuth();
+  console.log(token)
+  
+
 
  const {addMandate} =  useMandateStore()
   const { control, handleSubmit, watch } = useForm<FormType>({
@@ -56,21 +67,9 @@ export default function PaymentMandateForm() {
   const toDate = watch("toDate");
   const confirmationCheckbox = watch("confirmationCheckbox");
 
-  const onSubmit = (data: FormType) => {
-    console.log(data);
-    addMandate({
-      fromAccount: data.fromAccount,
-      toAccount: data.toAccount,
-      paymentType: data.paymentType,
-      fromDate: data.fromDate,
-      toDate: data.toDate,
-    });
 
-    router.push("/")
-
-    // Handle form submission here
-  };
-
+  // This date will for the users account will be necessary 
+  // which will contain account 
   const fromAccountOptions = [
     { value: 'account1', label: 'Checking Account' },
     { value: 'account2', label: 'Savings Account' },
@@ -85,13 +84,64 @@ export default function PaymentMandateForm() {
     if (!fromAccount || !toAccount || !fromDate) return "";
 
     let text = `Mandate for ${toAccountOptions.find(opt => opt.value === toAccount)?.label} (ID: ${toAccount})\n`;
-    text += `This mandate is created to authorize a ${paymentType} payment of ₹200 from your ${fromAccountOptions.find(opt => opt.value === fromAccount)?.label} to ${toAccountOptions.find(opt => opt.value === toAccount)?.label}.\n`;
+    text += `This mandate is created to authorize a ${paymentType} payment of R.100 from your ${fromAccountOptions.find(opt => opt.value === fromAccount)?.label} to ${toAccountOptions.find(opt => opt.value === toAccount)?.label}.\n`;
     text += `For Date: ${fromDate.toDateString()}\n`;
     if (paymentType === "recurring" && toDate) {
       text += `To Date: ${toDate.toDateString()}\n`;
     }
     return text;
   };
+
+  const onSubmit = (values: FormType) => {
+    console.log(values);
+   
+
+     makeMandate(
+      {
+        authToken : "bWlmb3M6cGFzc3dvcmQ=",
+        toOfficeId: 1,
+        toClientId: 115,
+        toAccountId: 29,
+        toAccountType : 2,
+        fromOfficeId: 1,
+        fromClientId: 115,
+        fromAccountId: "29",
+        fromAccountType : "2",
+        transferAmount: 100,
+     
+        transferDescription: generateMandateText(),
+      },
+      {
+        onSuccess : async (data) => {
+          console.log(data)
+          addMandate({
+            fromAccount: values.fromAccount,
+            toAccount: values.toAccount,
+            paymentType: values.paymentType,
+            fromDate: values.fromDate,
+            toDate: values.toDate,
+            amountDebited: 100,
+            resourceId: data.resourceId,
+            savingsId: data.savingsId,
+            transferDescription: generateMandateText(),
+          });
+
+          router.push("/")
+        },
+        onError : (error) => {
+          console.log('error', error);
+        }
+      },
+      
+    )
+
+ 
+
+
+
+    // Handle form submission here
+  };
+
 
   return (
     <>

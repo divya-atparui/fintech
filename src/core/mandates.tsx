@@ -7,6 +7,10 @@ type Mandate = {
   paymentType: string;
   fromDate: Date;
   toDate?: Date;
+  amountDebited: number;
+  savingsId : number;
+  resourceId : number;  
+  transferDescription: string; 
 };
 
 interface MandateStore {

@@ -1,49 +1,82 @@
-<h1 align="center">
-  <img alt="logo" src="./assets/icon.png" width="124px" style="border-radius:10px"/><br/>
-Mobile App </h1>
+# Finance App
 
-> This Project is based on [Obytes starter](https://starter.obytes.com)
+## Introduction
 
-## Requirements
+Welcome to the Finance App! This application allows users to manage their financial mandates efficiently. The app provides features for creating, viewing, and categorizing mandates, ensuring that users can keep track of their financial commitments easily.
 
-- [React Native dev environment ](https://reactnative.dev/docs/environment-setup)
-- [Node.js LTS release](https://nodejs.org/en/)
-- [Git](https://git-scm.com/)
-- [Watchman](https://facebook.github.io/watchman/docs/install#buildinstall), required only for macOS or Linux users
-- [Pnpm](https://pnpm.io/installation)
-- [VS Code Editor](https://code.visualstudio.com/download) ⚠️ Make sure to install all recommended extension from `.vscode/extensions.json`
+## Features
 
-## 👋 Quick start
+- **Mandate Creation**: Users can create new mandates with relevant details.
+- **Mandate View**: View all created mandates with an option to filter by type.
+- **Authentication**: Secure login functionality using Zustand and React Query.
 
-Clone the repo to your machine and install deps :
+## Getting Started
 
-```sh
-git clone https://github.com/user/repo-name
+### Prerequisites
 
-cd ./repo-name
+- **Node.js**: Ensure you have Node.js installed on your machine.
+- **Expo CLI**: Install Expo CLI globally if you haven't already:
+  ```bash
+  npm install -g expo-cli
+  ```
+- **React Native**: Familiarity with React Native concepts is helpful.
 
-pnpm install
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone <repository-url>
+   ```
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd finance-app
+   ```
+
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+### Running the App
+
+To run the app, use:
+
+```bash
+npm start
 ```
 
-To run the app on ios
+Follow the instructions in the Expo console to view the app on your device or emulator.
 
-```sh
-pnpm ios
+## Commit History
+
+### Detailed Commits
+
+- **[YYYY-MM-DD]** feat(mandates): implement mandate creation and view, update README for finance app
+
+  - Added functionality to create and view mandates.
+  - Updated README to reflect the app’s purpose and structure.
+
+- **[YYYY-MM-DD]** feat(auth): implement login with Zustand, React Query, and hardcode auth token due to API error
+  - Implemented login functionality.
+  - Temporary workaround for API network error.
+
+## Contributing
+
+Contributions are welcome! If you have suggestions for improvements or new features, please open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 ```
 
-To run the app on Android
+### Notes
+- Replace `<repository-url>` with the actual URL of your Git repository.
+- Update the commit history section with real commit dates and messages as you make new commits.
+- Adjust any other sections as needed to fit your app's specific details.
 
-```sh
-pnpm android
+This structure ensures clarity and provides all necessary information to developers who may work on or use your app in the future.
 ```
-
-## ✍️ Documentation
-
-- [Rules and Conventions](https://starter.obytes.com/getting-started/rules-and-conventions/)
-- [Project structure](https://starter.obytes.com/getting-started/project-structure)
-- [Environment vars and config](https://starter.obytes.com/getting-started/environment-vars-config)
-- [UI and Theming](https://starter.obytes.com/ui-and-theme/ui-theming)
-- [Components](https://starter.obytes.com/ui-and-theme/components)
-- [Forms](https://starter.obytes.com/ui-and-theme/Forms)
-- [Data fetching](https://starter.obytes.com/guides/data-fetching)
-- [Contribute to starter](https://starter.obytes.com/how-to-contribute/)

@@ -5,6 +5,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { useGetAuthToken } from '@/api/auth';
 import { useAuth } from '@/core';
 import { Button, ControlledInput, SafeAreaView, Text, View } from '@/ui';
 
@@ -19,7 +20,7 @@ export default function Login() {
   const router = useRouter();
 
   const { signIn } = useAuth();
-  // const { mutate: getToken } = useGetAuthToken();
+  const { mutate: getToken, isError } = useGetAuthToken(); 
   // const [isLoading, setIsLoading] = useState(false);
 
   const { handleSubmit, control } = useForm<FormType>({
@@ -27,63 +28,28 @@ export default function Login() {
   });
 
   const onSubmit = async (data: FormType) => {
-    // setIsLoading(true);
-    // try {
-    //   const response = await fetch(
-    //     'https://api.finverse3.com/fineract-provider/api/v1/authentication',
-    //     {
-    //       method: 'POST',
-    //       headers: {
-    //         'Accept': 'application/json',
-    //         'Fineract-Platform-TenantId': 'default',
-    //         'Content-Type': 'application/json',
-    //       },
-    //       body: JSON.stringify(data),
-    //     },
-    //   );
 
-    //   if (!response.ok) {
-    //     throw new Error('Login failed');
-    //   }
+    getToken(
+      {
+        username: data.username,
+        password: data.password,
+      },
+      {
+        onSuccess: async (data) => {
+          signIn({
+            access: data.base64EncodedAuthenticationKey,
+            refresh: data.base64EncodedAuthenticationKey,
+          });
+          console.log(data);
+          router.push('/');
+        },
+        onError: (error) => {
+          console.log('error', error);
+        },
+      },
+    );
 
-    //   const responseData = await response.json();
-    //   console.log('Login successful:', responseData);
-    //   Alert.alert('Success', 'Login successful');
-    //   // Handle successful login (e.g., store token, navigate to home screen)
-    // } catch (error) {
-    //   console.error('Login error:', error);
-    //   Alert.alert('Error', 'Login failed. Please check your credentials and try again.');
-    // } finally {
-    //   setIsLoading(false);
-    // }
-
-    console.log(data);
-
-    signIn({
-      access : "bWlmb3M6cGFzc3dvcmQ=",
-      refresh : "bWlmb3M6cGFzc3dvcmQ="
-    })
-
-    // getToken(
-    //   {
-    //     username: data.username,
-    //     password: data.password,
-    //   },
-    //   {
-    //     onSuccess: async (data) => {
-    //       signIn({
-    //         access: data.base64EncodedAuthenticationKey,
-    //         refresh: data.base64EncodedAuthenticationKey,
-    //       });
-    //       console.log(data);
-    //     },
-    //     onError: (error) => {
-    //       console.log('error', error);
-    //     },
-    //   },
-    // );
-
-    router.push('/');
+   
   };
 
   return (
@@ -103,12 +69,16 @@ export default function Login() {
           label="Password"
           secureTextEntry
           textContentType="password"
+          
         />
         <Button
           label="Login"
           onPress={handleSubmit(onSubmit)}
           // disabled={isLoading}
         />
+        {
+          isError && <Text className="text-red-500">Invalid credentials</Text>
+        }
       </View>
     </SafeAreaView>
   );

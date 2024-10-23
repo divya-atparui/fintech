@@ -4,6 +4,7 @@ import { useColorScheme } from 'nativewind';
 
 import { Item } from '@/components/settings/item';
 import { ItemsContainer } from '@/components/settings/items-container';
+import { ThemeItem } from '@/components/settings/theme-item';
 import { translate, useAuth } from '@/core';
 import { colors, FocusAwareStatusBar, ScrollView, Text, View } from '@/ui';
 import { Rate, Share, Support } from '@/ui/icons';
@@ -24,12 +25,13 @@ export default function Settings() {
           </Text>
           {/* <ItemsContainer title="settings.generale">
             <LanguageItem />
-            <ThemeItem />
+            
           </ItemsContainer> */}
 
           <ItemsContainer title="settings.about">
             <Item text="settings.app_name" value={Env.NAME} />
             <Item text="settings.version" value={Env.VERSION} />
+            <ThemeItem />
           </ItemsContainer>
 
           <ItemsContainer title="settings.support_us">
