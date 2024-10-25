@@ -40,6 +40,7 @@ export default function PaymentMandateForm() {
 
 
 
+
  const {mutate:makeMandate} = useMakeTransaction()
   const router = useRouter()
   const { token } = useAuth();
@@ -98,7 +99,7 @@ export default function PaymentMandateForm() {
 
      makeMandate(
       {
-        authToken : "bWlmb3M6cGFzc3dvcmQ=",
+        authToken : token?.access || "bWlmb3M6cGFzc3dvcmQ=",
         toOfficeId: 1,
         toClientId: 115,
         toAccountId: 29,
