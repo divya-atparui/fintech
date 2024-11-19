@@ -1,4 +1,4 @@
-export type UserResponse = {
+export type UserAuthResponse = {
   username: string;
   userId: number;
   base64EncodedAuthenticationKey: string;

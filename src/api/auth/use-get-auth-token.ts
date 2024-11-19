@@ -2,10 +2,10 @@ import type { AxiosError } from 'axios';
 import { createMutation } from 'react-query-kit';
 
 import { client } from '../common';
-import { type UserResponse } from './types';
+import { type UserAuthResponse } from './types';
 
 type Variables = {username: string; password: string};
-type Response = UserResponse;
+type Response = UserAuthResponse;
 
 // export const useGetAuthToken = createMutation<Response, Variables, AxiosError>({
 //   mutationFn: async (variables) => {
